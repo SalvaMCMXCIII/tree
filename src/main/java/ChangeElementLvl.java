@@ -41,10 +41,10 @@ public class ChangeElementLvl {
             moveQuery.executeUpdate();
 
             //Освобождение места для левого элемента
-
+//1
             Query updateLeft = manager.createQuery(
                     "UPDATE Tree t SET t.left = t.left - ?2 where t.left > ?1");
-            updateLeft.setParameter(1, moveTree.getLeft());
+            updateLeft.setParameter(1, moveTree.getRight());
             updateLeft.setParameter(2, (moveTree.getRight() - moveTree.getLeft()) + 1);
             updateLeft.executeUpdate();
 
@@ -77,10 +77,9 @@ public class ChangeElementLvl {
 //-right - move_left + parent_right + 1
 
 
-
-
             } else {
                 Tree treeId = manager.find(Tree.class, moveIdInput);
+                manager.refresh(treeId);
 
                 Query leftQuery = manager.createQuery(
                         "UPDATE Tree t SET t.left = t.left + ?1  where t.left > ?2");
@@ -96,9 +95,6 @@ public class ChangeElementLvl {
 
                 manager.refresh(treeId);
 
-                System.out.println(treeId.getRight());
-                System.out.println(moveTree.getRight());
-
                 Query KeyMove = manager.createQuery(
                         "UPDATE Tree t SET t.left = (0 - (t.left)) + ?1, t.right = (0 - (t.right)) +?1, t.level = t.level - ?2 + ?3 + 1 where t.left < 0");
                 KeyMove.setParameter(1, (treeId.getRight() - moveTree.getRight()) - 1);
@@ -107,10 +103,8 @@ public class ChangeElementLvl {
                 KeyMove.executeUpdate();
                 manager.refresh(treeId);
 
-//                level - move_level + parent_level + 1
-
-
             }
+
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
