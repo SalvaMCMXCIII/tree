@@ -1,6 +1,8 @@
 import javax.persistence.*;
 import java.util.List;
 import java.util.Scanner;
+import entity.Tree;
+
 
 public class Application {
 
@@ -8,7 +10,7 @@ public class Application {
 
     public static void main(String[] args) {
         System.out.println("Меню");
-        System.out.println("[1] - Add new Tree");
+        System.out.println("[1] - Add new Entity.Tree");
         System.out.println("[2] - Update");
         System.out.println("[3] - Delete");
 
@@ -48,7 +50,6 @@ public class Application {
             System.out.println(dash + tree.getName() + " [" + tree.getId() + "]");
 
         }
-
 
         System.out.println("\n" + "Введите ID категории:");
         long idInput = Long.parseLong(IN.nextLine());
